@@ -5,4 +5,9 @@
 (defn validate-query
   "Middleware that validates a query immediately after normalization."
   [qp]
-  (comp qp mbql.s/validate-query))
+  (fn [query respond raise canceled-chan]
+    (qp
+     (mbql.s/validate-query query)
+     respond
+     raise
+     canceled-chan)))
